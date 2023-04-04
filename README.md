@@ -12,7 +12,6 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 Each of the following case study questions can be answered using a single SQL statement:
 
 What is the total amount each customer spent at the restaurant?
-
     SELECT s.customer_id, SUM(m.price) AS total_spent
     FROM dannys_diner.sales s
     INNER JOIN dannys_diner.menu m
@@ -28,7 +27,36 @@ What is the total amount each customer spent at the restaurant?
 
 
 How many days has each customer visited the restaurant?
+    SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
+    FROM dannys_diner.sales s
+    GROUP BY customer_id;
+
+| customer_id | days_visited |
+| ----------- | ------------ |
+| A           | 4            |
+| B           | 6            |
+| C           | 2            |
+
 What was the first item from the menu purchased by each customer?
+    WITH ranked AS(
+    SELECT s.customer_id, s.product_id, m.product_name, s.order_date,
+    	   DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) 
+    FROM dannys_diner.sales s
+    LEFT JOIN dannys_diner.menu m
+    ON s.product_id=m.product_id
+    ORDER BY s.order_date, s.customer_id)
+    SELECT customer_id, product_name
+    FROM ranked
+    WHERE dense_rank=1
+    GROUP BY customer_id, product_name;
+
+| customer_id | product_name |
+| ----------- | ------------ |
+| A           | curry        |
+| A           | sushi        |
+| B           | curry        |
+| C           | ramen        |
+
 What is the most purchased item on the menu and how many times was it purchased by all customers?
 Which item was the most popular for each customer?
 Which item was purchased first by the customer after they became a member?
