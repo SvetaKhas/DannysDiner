@@ -3,24 +3,19 @@
    --------------------*/
 
 -- 1. What is the total amount each customer spent at the restaurant?
-/*
 SELECT s.customer_id, SUM(m.price) AS total_spent
 FROM dannys_diner.sales s
 INNER JOIN dannys_diner.menu m
 ON s.product_id=m.product_id
 GROUP BY s.customer_id
 ORDER BY s.customer_id
-*/
 
 -- 2. How many days has each customer visited the restaurant?
-/*
 SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
 FROM dannys_diner.sales s
 GROUP BY customer_id
-*/
 
 -- 3. What was the first item from the menu purchased by each customer?
-/*
 WITH ranked AS(
 SELECT s.customer_id, s.product_id, m.product_name, s.order_date,
 	   DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY order_date) 
@@ -32,10 +27,8 @@ SELECT customer_id, product_name
 FROM ranked
 WHERE dense_rank=1
 GROUP BY customer_id, product_name
-*/
 
 -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
-/*
 SELECT m.product_name AS most_purchased_item, COUNT(s.product_id) AS times_purchased
 FROM dannys_diner.sales s
 INNER JOIN dannys_diner.menu m
@@ -43,10 +36,8 @@ ON s.product_id=m.product_id
 GROUP BY most_purchased_item
 ORDER BY times_purchased DESC
 LIMIT 1
-*/
 
 -- 5. Which item was the most popular for each customer?
-/*
 WITH ranked AS(
 SELECT s.customer_id, m.product_name, COUNT(s.product_id) AS times_purchased,
 	   DENSE_RANK() OVER(PARTITION BY s.customer_id ORDER BY COUNT(s.product_id) DESC)
@@ -58,7 +49,6 @@ ORDER BY s.customer_id)
 SELECT customer_id, product_name, times_purchased
 FROM ranked
 WHERE dense_rank=1
-*/
 
 -- 6. Which item was purchased first by the customer after they became a member?
 WITH ranked_orders AS(
@@ -76,7 +66,6 @@ ORDER BY s.customer_id
 SELECT customer_id, product_name
 FROM ranked_orders
 WHERE ranked_order=1
-
 
 -- 7. Which item was purchased just before the customer became a member?
 WITH ranked_orders AS(
@@ -120,7 +109,7 @@ ON s.product_id=menu.product_id
 GROUP BY s.customer_id
 ORDER BY s.customer_id
 
--- Actual points customers earned becoming a  member
+-- Actual points customers earned after becoming a  member
 
 SELECT s.customer_id,
        SUM(CASE
