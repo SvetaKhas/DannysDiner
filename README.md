@@ -12,6 +12,8 @@ Danny’s Diner is in need of your assistance to help the restaurant stay afloat
 Each of the following case study questions can be answered using a single SQL statement:
 
 <b>1. What is the total amount each customer spent at the restaurant?</b><br>
+
+
     SELECT s.customer_id, SUM(m.price) AS total_spent
     FROM dannys_diner.sales s
     INNER JOIN dannys_diner.menu m
@@ -27,6 +29,8 @@ Each of the following case study questions can be answered using a single SQL st
 
 
 <b>2. How many days has each customer visited the restaurant?</b><br>
+
+
     SELECT customer_id, COUNT(DISTINCT order_date) AS days_visited
     FROM dannys_diner.sales s
     GROUP BY customer_id;
