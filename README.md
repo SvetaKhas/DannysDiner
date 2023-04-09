@@ -9,7 +9,7 @@ Danny seriously loves Japanese food so in the beginning of 2021, he decides to e
 Danny’s Diner is in need of your assistance to help the restaurant stay afloat - the restaurant has captured some very basic data from their few months of operation but have no idea how to use their data to help them run the business.
 
 Entity Relationship Diagram: <br>
-![image](https://user-images.githubusercontent.com/85653222/230747596-d4b75b86-7ae7-4632-a22f-1bdfdca632ca.png)
+![image](https://user-images.githubusercontent.com/85653222/230747617-2bf4beb7-52c4-442e-b18a-5302fdd989b0.png)
 
 
 <b>Case Study Questions</b> <br>
